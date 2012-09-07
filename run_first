@@ -9,7 +9,7 @@ end
 
 def configure_remote
   run_git_command('remote rm jp')
-  run_git_command('remote add jp git://github.com/#<Configatron::Store:0x302a3f0>/#<Configatron::Store:0x302a228>.git')
+  run_git_command('remote add jp git://github.com/20120910uk/prep.git')
 end
 
 def create_first_branches
