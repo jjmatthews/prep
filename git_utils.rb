@@ -10,7 +10,7 @@ def exit_if_branch_condition_fails(specification_block,branch,message_block)
   status = run_git_command("branch",true)
   match_expression = %r/\* #{branch}/
 
-  if (specification.call(match_expression,status))
+  if (specification_block.call(match_expression,status))
     puts message_block.call(branch)
     exit
   end
