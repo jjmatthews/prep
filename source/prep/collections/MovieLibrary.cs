@@ -202,8 +202,8 @@ namespace prep.collections
     {
         public int Compare(Movie x, Movie y)
         {
-          return  x.production_studio.GetHashCode().CompareTo(y.production_studio.GetHashCode()) +
-            x.date_published.CompareTo(y.date_published);
+          return  x.production_studio.GetHashCode().CompareTo(y.production_studio.GetHashCode()) &
+            x.date_published.Year.CompareTo(y.date_published.Year);
         }
     }
 
