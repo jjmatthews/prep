@@ -64,11 +64,64 @@ namespace prep.collections
 
     public IEnumerable<Movie> sort_all_movies_by_movie_studio_and_year_published()
     {
-        var list = new List<Movie>(movies);
+        var disneyList = new List<Movie>();
+        foreach (var movie in movies)
+        {
+            if(movie.production_studio == ProductionStudio.Disney)
+                disneyList.Add(movie);
+        }
+        disneyList.Sort(new MovieYearSort());
+        
+        var dreamWorks = new List<Movie>();
+        foreach (var movie in movies)
+        {
+            if (movie.production_studio == ProductionStudio.Dreamworks)
+                dreamWorks.Add(movie);
+        }
+        dreamWorks.Sort(new MovieYearSort());
 
-        list.Sort(new MovieStudioYearPublishedSort());
+        var mgm = new List<Movie>();
+        foreach (var movie in movies)
+        {
+            if (movie.production_studio == ProductionStudio.MGM)
+                mgm.Add(movie);
+        }
+        mgm.Sort(new MovieYearSort());
 
-        return list;
+
+        var paramount = new List<Movie>();
+        foreach (var movie in movies)
+        {
+            if (movie.production_studio == ProductionStudio.Paramount)
+                paramount.Add(movie);
+        }
+        paramount.Sort(new MovieYearSort());
+
+        var pixar = new List<Movie>();
+        foreach (var movie in movies)
+        {
+            if (movie.production_studio == ProductionStudio.Pixar)
+                pixar.Add(movie);
+        }
+        pixar.Sort(new MovieYearSort());
+
+        var universal = new List<Movie>();
+        foreach (var movie in movies)
+        {
+            if (movie.production_studio == ProductionStudio.Universal)
+                universal.Add(movie);
+        }
+        universal.Sort(new MovieYearSort());
+
+        var finallist = new List<Movie>();
+        finallist.AddRange(mgm);
+        finallist.AddRange(pixar);
+        finallist.AddRange(dreamWorks);
+        finallist.AddRange(universal);
+        finallist.AddRange(disneyList);
+//        finallist.AddRange(paramount);
+
+        return finallist;
     }
 
     public IEnumerable<Movie> all_movies_not_published_by_pixar()
@@ -144,7 +197,16 @@ namespace prep.collections
         return sortedMovies;
     }
   }
-  public class MovieTitlePublished : IComparer<Movie>
+
+    public class MovieYearSort : IComparer<Movie>
+    {
+        public int Compare(Movie x, Movie y)
+        {
+           return x.date_published.Year.CompareTo(y.date_published.Year);
+        }
+    }
+
+    public class MovieTitlePublished : IComparer<Movie>
   {
       readonly SortingDirection sortingDirection;
 
@@ -195,15 +257,6 @@ namespace prep.collections
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-    }
-
-    public class MovieStudioYearPublishedSort : IComparer<Movie>
-    {
-        public int Compare(Movie x, Movie y)
-        {
-          return  x.production_studio.GetHashCode().CompareTo(y.production_studio.GetHashCode()) &
-            x.date_published.Year.CompareTo(y.date_published.Year);
         }
     }
 
